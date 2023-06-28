@@ -3,8 +3,8 @@
 #   docker-compose up
 ---
 version: "2"
-services:
 
+services:
   zookeeper:
     image: debezium/zookeeper:${DEBEZIUM_VERSION}
     ports:
@@ -12,13 +12,6 @@ services:
       - 2888:2888
       - 3888:3888
 
-  # You can list the existing topics with
-  #   docker-compose exec kafka /kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --list
-  # After start CDC, you can consume the events using this command
-  # MySQL: 
-  #   docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic mysqldb.inventory.users
-  # Postgres:
-  #   docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic postgresdb.inventory.product
   kafka:
     image: debezium/kafka:${DEBEZIUM_VERSION}
     ports:
@@ -31,24 +24,6 @@ services:
     links:
       - zookeeper:zookeeper
 
-  # docker-compose exec mysql bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD inventory'
-  # mysql:
-  #   image: debezium/example-mysql:${DEBEZIUM_VERSION}
-  #   ports: 
-  #     - 3306:3306
-  #   environment: 
-  #     MYSQL_ROOT_PASSWORD: debezium
-  #     MYSQL_USER: mysqluser
-  #     MYSQL_PASSWORD: mysqlpw
-  
-  # # docker-compose exec postgres env PGOPTIONS="--search_path=inventory" bash -c 'psql -U $POSTGRES_USER postgres'
-  # postgres:
-  #   image: debezium/example-postgres:${DEBEZIUM_VERSION}
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres  
   
   cdc_connect:
     image: debezium/connect:${DEBEZIUM_VERSION}
@@ -112,3 +87,13 @@ services:
         /etc/confluent/docker/run &
         #
         sleep infinity
+
+
+# You can list the existing topics with
+  #   docker-compose exec kafka /kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --list
+  # After start CDC, you can consume the events using this command
+  # MySQL: 
+  #   docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic mysqldb.inventory.users
+  # Postgres:
+  #   docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic postgresdb.inventory.product
+  

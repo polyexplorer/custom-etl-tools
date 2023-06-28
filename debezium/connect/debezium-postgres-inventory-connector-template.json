@@ -1,18 +1,16 @@
-
-
-
 {
     "name": "debezium-postgres-inventory-connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "tasks.max": "1",
-        "database.hostname": "${SOURCE_HOST}",
-        "database.port": "${SOURCE_PORT}",
-        "database.user": "${SOURCE_USER}",
-        "database.password": "${SOURCE_PASS}",
-        "database.dbname": "${SOURCE_DB}",
-        "database.server.name": "${DEBEZIUM_SERVER_NAME}",
-        "schema.include": "${SOURCE_SCHEMA}",
-        "table.include.list": "${SOURCE_SCHEMA}.dummy_table"
+        "database.hostname": "SOURCE_HOST",
+        "database.port": "SOURCE_PORT",
+        "database.user": "SOURCE_USER",
+        "database.password": "SOURCE_PASS",
+        "database.dbname": "SOURCE_DB",
+        "database.server.name": "DEBEZIUM_SERVER_NAME",
+        "schema.include": "SOURCE_SCHEMA",
+        "topic.prefix":"DEBEZIUM_SERVER_NAME",
+        "table.include.list": "SOURCE_SCHEMA.dummy_table"
     }
 }
